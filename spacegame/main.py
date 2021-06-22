@@ -8,7 +8,7 @@ from pygame.locals import (DOUBLEBUF,
                            K_LEFT,
                            K_RIGHT,
                            QUIT,
-                           K_ESCAPE, K_UP, K_DOWN, K_RCTRL, K_LCTRL
+                           K_ESCAPE, K_UP, K_DOWN, K_RCTRL, K_LCTRL, K_c, K_p, K_q
                            )
 from fundo import Fundo
 from elementos import ElementoSprite
@@ -100,7 +100,40 @@ class Jogo:
 
         # Aumenta a pontos baseado no número de acertos:
         self.jogador.set_pontos(self.jogador.get_pontos() + len(hitted))
+    def text_objects(self,text,color,size):
+        if(size=="small"):
+            textSurface = pygame.font.SysFont("comicsansms",25).render(text, True, color)
+        else:
+            textSurface = pygame.font.SysFont("comicsansms",70).render(text, True, color)
+        return textSurface, textSurface.get_rect()
     
+    def message_to_screen(self,msg,color,size, y_displace=0):
+        textSurf, textRect = self.text_objects(msg,color,size)
+        textRect.center = (500),(500)+y_displace
+        self.tela.blit(textSurf,textRect)
+
+    def pause(self):
+        paused = True
+        pygame.mixer.music.stop()
+
+        while paused:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == K_c:
+                        pygame.mixer.music.play(-1)
+                        paused = False
+                    elif event.key == K_q:
+                        pygame.quit()
+                        quit()
+
+            self.tela.fill((211,211,211))
+            self.message_to_screen("Pausado",(55,50,200),"large",-100)
+            self.message_to_screen("Pressione C para continuar ou Q para sair.", (0,0,0),"small",-60)
+            pygame.display.update()
+
     def trata_eventos(self):
         event = pygame.event.poll()
         if event.type == pygame.QUIT:
@@ -121,6 +154,8 @@ class Jogo:
                 self.jogador.accel_right()
             elif key == K_LEFT:
                 self.jogador.accel_left()
+            elif key == K_p:
+                self.pause()
 
         keys = pygame.key.get_pressed()
         if self.interval > 10:
