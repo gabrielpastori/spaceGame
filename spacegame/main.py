@@ -36,6 +36,7 @@ class Jogo:
         pygame.mouse.set_visible(0)
         pygame.display.set_caption('Space Game')
         self.run = True
+        self.telaInicio()        
 
     def manutenção(self):
         r = random.randint(0, 100)
@@ -111,6 +112,28 @@ class Jogo:
         textSurf, textRect = self.text_objects(msg,color,size)
         textRect.center = (500),(500)+y_displace
         self.tela.blit(textSurf,textRect)
+    
+    def telaInicio(self):
+        paused = True
+        pygame.mixer.music.stop()
+
+        while paused:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == K_c:
+                        pygame.mixer.music.play(-1)
+                        paused = False
+                    elif event.key == K_q:
+                        pygame.quit()
+                        quit()
+
+            self.tela.fill((211,211,211))
+            self.message_to_screen("SpaceGame!",(55,50,200),"large",-100)
+            self.message_to_screen("Pressione C para Iniciar o jogo, Q para sair e P para pausar.", (0,0,0),"small",-60)
+            pygame.display.update()
 
     def pause(self):
         paused = True
@@ -154,6 +177,9 @@ class Jogo:
                 self.jogador.accel_right()
             elif key == K_LEFT:
                 self.jogador.accel_left()
+            elif key == K_q:
+                pygame.quit()
+                quit()
             elif key == K_p:
                 self.pause()
 
