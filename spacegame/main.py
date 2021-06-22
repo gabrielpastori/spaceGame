@@ -20,7 +20,7 @@ class Jogo:
         self.elementos = {}
         pygame.init()
         pygame.mixer.init()
-        pygame.mixer.music.load(os.path.abspath(os.getcwd())+"\sons\musica.mp3")
+        pygame.mixer.music.load(os.path.abspath(os.path.join(os.getcwd(),"sons","musica.mp3")))
         pygame.mixer.music.play(-1)
         self.tela = pygame.display.set_mode(size)
         self.fundo = Fundo()
@@ -164,7 +164,7 @@ class Nave(ElementoSprite):
         self.lives = lives
 
     def colisão(self):
-        som_do_dano = pygame.mixer.Sound(os.path.abspath(os.getcwd())+"\sons\som_do_dano.mp3")
+        som_do_dano = pygame.mixer.Sound(os.path.join(os.getcwd(),"sons","som_do_dano.mp3"))
         som_do_dano.play()
         if self.get_lives() <= 0:
             self.kill()
@@ -178,7 +178,7 @@ class Nave(ElementoSprite):
 
     def alvejado(self):
         if self.get_lives() <= 0:
-            som_da_destruicao = pygame.mixer.Sound(os.path.abspath(os.getcwd())+"\sons\destruicao\destruicao "+str(random.randint(1,7))+".mp3")
+            som_da_destruicao = pygame.mixer.Sound(os.path.join(os.getcwd(),"sons","destruicao","destruicao"+str(random.randint(1,7))+".mp3"))
             som_da_destruicao.play()
             self.kill()
         else:
@@ -256,7 +256,7 @@ class Jogador(Nave):
         self.pontos = pontos
 
     def atira(self, lista_de_tiros, image=None):
-        som_do_tiro = pygame.mixer.Sound(os.path.abspath(os.getcwd())+"\sons\som_do_tiro.mp3")
+        som_do_tiro = pygame.mixer.Sound(os.path.join(os.getcwd(),"sons","som_do_tiro.mp3"))
         som_do_tiro.play()
         l = 1
         if self.pontos > 10: l = 3
