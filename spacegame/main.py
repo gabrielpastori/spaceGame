@@ -1,4 +1,6 @@
 import pygame
+import os
+import random
 from pygame.locals import (DOUBLEBUF,
                            FULLSCREEN,
                            KEYDOWN,
@@ -17,6 +19,9 @@ class Jogo:
     def __init__(self, size=(1000, 1000), fullscreen=False):
         self.elementos = {}
         pygame.init()
+        pygame.mixer.init()
+        pygame.mixer.music.load(os.path.abspath(os.getcwd())+"\sons\musica.mp3")
+        pygame.mixer.music.play(-1)
         self.tela = pygame.display.set_mode(size)
         self.fundo = Fundo()
         self.jogador = None
@@ -104,7 +109,7 @@ class Jogo:
             key = event.key
             if key == K_ESCAPE:
                 self.run = False
-            elif key in (K_LCTRL, K_RCTRL):
+            elif key in (K_LCTRL, K_RCTRL) and event.type == KEYDOWN:
                 self.interval = 0
                 self.jogador.atira(self.elementos["tiros"])
             elif key == K_UP:
@@ -159,6 +164,8 @@ class Nave(ElementoSprite):
         self.lives = lives
 
     def colisão(self):
+        som_do_dano = pygame.mixer.Sound(os.path.abspath(os.getcwd())+"\sons\som_do_dano.mp3")
+        som_do_dano.play()
         if self.get_lives() <= 0:
             self.kill()
         else:
@@ -171,6 +178,8 @@ class Nave(ElementoSprite):
 
     def alvejado(self):
         if self.get_lives() <= 0:
+            som_da_destruicao = pygame.mixer.Sound(os.path.abspath(os.getcwd())+"\sons\destruicao\destruicao "+str(random.randint(1,7))+".mp3")
+            som_da_destruicao.play()
             self.kill()
         else:
             self.set_lives(self.get_lives() - 1)
@@ -247,6 +256,8 @@ class Jogador(Nave):
         self.pontos = pontos
 
     def atira(self, lista_de_tiros, image=None):
+        som_do_tiro = pygame.mixer.Sound(os.path.abspath(os.getcwd())+"\sons\som_do_tiro.mp3")
+        som_do_tiro.play()
         l = 1
         if self.pontos > 10: l = 3
         if self.pontos > 50: l = 5
