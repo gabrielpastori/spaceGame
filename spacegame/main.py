@@ -99,7 +99,7 @@ class Jogo:
 
         # Aumenta a pontos baseado no número de acertos:
         self.jogador.set_pontos(self.jogador.get_pontos() + len(hitted))
-
+    
     def trata_eventos(self):
         event = pygame.event.poll()
         if event.type == pygame.QUIT:
@@ -147,11 +147,11 @@ class Jogo:
             # Desenhe no back buffer
             self.desenha_elementos()
             pygame.display.flip()
-
+    
 
 class Nave(ElementoSprite):
     def __init__(self, position, lives=0, speed=[0, 0], image=None, new_size=[83, 248]):
-        self.acceleration = [3, 3]
+        self.acceleration = [2, 2]
         if not image:
             image = "aircraft.png"
         super().__init__(image, position, speed, new_size)
