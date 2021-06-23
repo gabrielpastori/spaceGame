@@ -21,3 +21,4 @@ O jogo é composto por 3 fases, em cada uma delas é atribuído um determinado f
 * Lorenzo Alencastro
 * Wendell Oliveira
 
+![O jogo](https://user-images.githubusercontent.com/31520662/123023037-1892aa00-d3ad-11eb-90b9-1dde1a0adc39.png)
