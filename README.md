@@ -1,6 +1,6 @@
 # Instruções para execução:
 No projeto, acesse:  
-`cd spacegame`  
+`cd spacegame/`  
 Então, execute:  
 `python3 main.py`  
 
