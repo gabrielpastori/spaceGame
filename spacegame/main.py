@@ -326,8 +326,11 @@ class Jogador(Nave):
     
         if self.pontos > 20:
             l = 2
+            image="tiro2.png"
         if self.pontos > 120:
             l = 3
+            image="tiro3.png"
+
         p = self.get_pos()
         speeds = self.get_fire_speed(l)
         for s in speeds:
@@ -364,7 +367,6 @@ class Tiro(ElementoSprite):
         super().__init__(image, position, speed)
         if list is not None:
             self.add(list)
-
 
 if __name__ == '__main__':
     J = Jogo()
