@@ -272,7 +272,8 @@ class Asteroid(Nave):
     def __init__(self, position, lives=1, speed=None, image=None, size=(100, 100)):
         if not image:
             image = "asteroid.png"
-        super().__init__(position, lives, speed, image, size)
+        
+        super().__init__(position, lives+2*J.nivel, speed, image, size)
 
 
 class Jogador(Nave):
