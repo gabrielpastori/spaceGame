@@ -22,7 +22,6 @@ class Jogo:
         pygame.mixer.init()
         pygame.mixer.music.set_volume(0.2)
         pygame.mixer.music.load(os.path.abspath(os.path.join(os.getcwd(),"sons","musica.wav")))
-        pygame.mixer.music.play(-1)
         self.tela = pygame.display.set_mode(size)
         self.fundo = Fundo()
         self.jogador = None
@@ -37,7 +36,7 @@ class Jogo:
         pygame.display.set_caption('Space Game')
         self.run = True
         self.telaInicio()        
-
+        pygame.mixer.music.play(-1)
     def manutenção(self):
         r = random.randint(0, 100)
         x = random.randint(1, self.screen_size[0])
@@ -49,14 +48,14 @@ class Jogo:
 
     def muda_nivel(self):
         xp = self.jogador.get_pontos()
-        if xp > 10 and self.level == 0:
-            self.fundo = Fundo("tile2.png")
+        if xp > 20 and self.nivel == 0:
+            self.fundo = Fundo("space2.jpg")
             self.nivel = 1
             self.jogador.set_lives(self.jogador.get_lives() + 3)
-        elif xp > 50 and self.level == 1:
-            self.fundo = Fundo("tile3.png")
+        elif xp > 120 and self.nivel == 1:
+            self.fundo = Fundo("space3.jpg")
             self.nivel = 2
-            self.jogador.set_lives(self.player.get_lives() + 6)
+            self.jogador.set_lives(self.jogador.get_lives() + 6)
 
     def atualiza_elementos(self, dt):
         self.fundo.update(dt)
@@ -199,7 +198,7 @@ class Jogo:
         self.elementos['tiros_inimigo'] = pygame.sprite.RenderPlain()
         while self.run:
             clock.tick(1000 / dt)
-
+            self.muda_nivel()
             self.trata_eventos()
             self.ação_elemento()
             self.manutenção()
@@ -324,9 +323,11 @@ class Jogador(Nave):
         som_do_tiro.set_volume(0.2)
         som_do_tiro.play()
         l = 1
-        if self.pontos > 10: l = 3
-        if self.pontos > 50: l = 5
-
+    
+        if self.pontos > 20:
+            l = 2
+        if self.pontos > 120:
+            l = 3
         p = self.get_pos()
         speeds = self.get_fire_speed(l)
         for s in speeds:
